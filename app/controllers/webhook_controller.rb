@@ -22,18 +22,17 @@ class WebhookController < ApplicationController
     events.each { |event|
       case event
       when Line::Bot::Event::Message
+        message = {
+          type: 'text',
+          text: '「東京都」と入力してください。'
+        }
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
-          client.reply_message(event['replyToken'], message)
-        when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-          response = client.get_message_content(event.message['id'])
-          tf = Tempfile.open("content")
-          tf.write(response.body)
+          if event.message['text'] == '東京都'
+            message['text'] = "2020/11/18の感染者数\n200人\n累計感染者数\n4000人"
+          end
         end
+        client.reply_message(event['replyToken'], message)
       end
     }
     head :ok
