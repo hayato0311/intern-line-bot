@@ -24,15 +24,25 @@ class WebhookController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
+          if event.message['text'] == '東京都' then
+            message = {
+              type: 'text',
+              text: "2020/11/18の感染者数\n200人\n累計感染者数\n4000人"
+            }
+            client.reply_message(event['replyToken'], message)
+          else
+            message = {
+              type: 'text',
+              text: '「東京都」と入力してください。'
+            }
+            client.reply_message(event['replyToken'], message)
+          end
+        else
           message = {
             type: 'text',
-            text: event.message['text']
+            text: '「東京都」と入力してください。'
           }
           client.reply_message(event['replyToken'], message)
-        when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-          response = client.get_message_content(event.message['id'])
-          tf = Tempfile.open("content")
-          tf.write(response.body)
         end
       end
     }
