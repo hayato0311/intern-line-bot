@@ -29,10 +29,7 @@ class WebhookController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           if event.message['text'] == '東京都'
-            message = {
-              type: 'text',
-              text: "2020/11/18の感染者数\n200人\n累計感染者数\n4000人"
-            }
+            message['text'] = "2020/11/18の感染者数\n200人\n累計感染者数\n4000人"
           end
         end
         client.reply_message(event['replyToken'], message)
