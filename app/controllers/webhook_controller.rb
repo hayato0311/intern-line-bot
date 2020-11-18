@@ -39,19 +39,18 @@ class WebhookController < ApplicationController
         }
         case event.type
         when Line::Bot::Event::MessageType::Text
-          if event.message['text'].in?(PREFECTURES)
-            uri = URI.parse(API_URL)
-            response = Net::HTTP.get_response(uri)
-            body = response.read_body
-            
-            covid = JSON.parse(body)
-            prefecture = event.message['text']
-            if prefecture != '北海道'
-              prefecture = prefecture.chop
-            end
+          uri = URI.parse(API_URL)
+          response = Net::HTTP.get_response(uri)
+          body = response.read_body
+          
+          covid = JSON.parse(body)
+          prefecture = event.message['text']
+          if prefecture != '北海道'
+            prefecture = prefecture.chop
+          end
 
-            covid_prefecture = covid.find { |data| data['name_ja'] == prefecture }
-
+          covid_prefecture = covid.find { |data| data['name_ja'] == prefecture }
+          if covid_prefecture
             update_date = covid_prefecture["last_updated"]["cases_date"]
             update_date = update_date.to_s
             update_date = Date.parse(update_date)
