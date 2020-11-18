@@ -22,28 +22,20 @@ class WebhookController < ApplicationController
     events.each { |event|
       case event
       when Line::Bot::Event::Message
+        message = {
+          type: 'text',
+          text: '「東京都」と入力してください。'
+        }
         case event.type
         when Line::Bot::Event::MessageType::Text
-          if event.message['text'] == '東京都' then
+          if event.message['text'] == '東京都'
             message = {
               type: 'text',
               text: "2020/11/18の感染者数\n200人\n累計感染者数\n4000人"
             }
-            client.reply_message(event['replyToken'], message)
-          else
-            message = {
-              type: 'text',
-              text: '「東京都」と入力してください。'
-            }
-            client.reply_message(event['replyToken'], message)
           end
-        else
-          message = {
-            type: 'text',
-            text: '「東京都」と入力してください。'
-          }
-          client.reply_message(event['replyToken'], message)
         end
+        client.reply_message(event['replyToken'], message)
       end
     }
     head :ok
