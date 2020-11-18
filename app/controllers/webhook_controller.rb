@@ -50,28 +50,25 @@ class WebhookController < ApplicationController
               prefecture = prefecture.chop
             end
 
-            for covid_prefecture in covid do
-              if covid_prefecture['name_ja'] == prefecture
-                update_date = covid_prefecture["last_updated"]["cases_date"]
-                update_date = update_date.to_s
-                update_date = Date.parse(update_date)
+            covid_prefecture = covid.find { |data| data['name_ja'] == prefecture }
 
-                message['text'] = <<~EOS
-                  #{event.message['text']}
-                  最終更新日
-                  #{update_date.strftime("%Y/%m/%d")}
-                  現在の感染者数
-                  #{infected_population(covid_prefecture)}人
-                  重症者数
-                  #{covid_prefecture["severe"]}人
-                  死亡者数
-                  #{covid_prefecture["deaths"]}人
-                  累計感染者数
-                  #{covid_prefecture["cases"]}人
-                EOS
-                break
-              end
-            end
+            update_date = covid_prefecture["last_updated"]["cases_date"]
+            update_date = update_date.to_s
+            update_date = Date.parse(update_date)
+
+            message['text'] = <<~EOS
+              #{event.message['text']}
+              最終更新日
+              #{update_date.strftime("%Y/%m/%d")}
+              現在の感染者数
+              #{infected_population(covid_prefecture)}人
+              重症者数
+              #{covid_prefecture["severe"]}人
+              死亡者数
+              #{covid_prefecture["deaths"]}人
+              累計感染者数
+              #{covid_prefecture["cases"]}人
+            EOS
           end
         end
         client.reply_message(event['replyToken'], message)
