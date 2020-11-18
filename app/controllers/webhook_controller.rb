@@ -1,7 +1,18 @@
 require 'line/bot'
+require "uri"
+require "net/http"
+require "json"
 
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback] # CSRF対策無効化
+
+  PREFECTURES = [
+    '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県',
+    '石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県',
+    '岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'
+  ]
+
+  API_URL = 'https://covid19-japan-web-api.now.sh/api/v1/prefectures'
 
   def client
     @client ||= Line::Bot::Client.new { |config|
@@ -18,12 +29,6 @@ class WebhookController < ApplicationController
       head 470
     end
 
-    prefectures = [
-      '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県',
-      '石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県',
-      '岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'
-    ]
-
     events = client.parse_events_from(body)
     events.each { |event|
       case event
@@ -34,8 +39,35 @@ class WebhookController < ApplicationController
         }
         case event.type
         when Line::Bot::Event::MessageType::Text
-          if event.message['text'].in?(prefectures)
-            message['text'] = "#{event.message['text']}\n2020/11/18の感染者数\n200人\n累計感染者数\n4000人"
+          uri = URI.parse(API_URL)
+          response = Net::HTTP.get_response(uri)
+          body = response.read_body
+          
+          covid = JSON.parse(body)
+          prefecture = event.message['text']
+          if prefecture != '北海道'
+            prefecture = prefecture.chop
+          end
+
+          covid_prefecture = covid.find { |data| data['name_ja'] == prefecture }
+          if covid_prefecture
+            update_date = covid_prefecture["last_updated"]["cases_date"]
+            update_date = update_date.to_s
+            update_date = Date.parse(update_date)
+
+            message['text'] = <<~EOS
+              #{event.message['text']}
+              最終更新日
+              #{update_date.strftime("%Y/%m/%d")}
+              現在の感染者数
+              #{infected_population(covid_prefecture)}人
+              重症者数
+              #{covid_prefecture["severe"]}人
+              死亡者数
+              #{covid_prefecture["deaths"]}人
+              累計感染者数
+              #{covid_prefecture["cases"]}人
+            EOS
           end
         end
         client.reply_message(event['replyToken'], message)
@@ -43,4 +75,10 @@ class WebhookController < ApplicationController
     }
     head :ok
   end
+
+  private
+  def infected_population(covid_info)
+    return covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
+  end
+
 end
