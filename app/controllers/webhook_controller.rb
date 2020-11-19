@@ -54,22 +54,17 @@ class WebhookController < ApplicationController
             update_date = covid_prefecture["last_updated"]["cases_date"]
             update_date = update_date.to_s
             update_date = Date.parse(update_date)
-
-            message['text'] = <<~EOS
-              #{event.message['text']}
-              最終更新日
-              #{update_date.strftime("%Y/%m/%d")}
-              現在の感染者数
-              #{infected_population(covid_prefecture)}人
-              重症者数
-              #{covid_prefecture["severe"]}人
-              死亡者数
-              #{covid_prefecture["deaths"]}人
-              累計感染者数
-              #{covid_prefecture["cases"]}人
-            EOS
+            
+            message = message_template(
+              event.message['text'], 
+              update_date.strftime("%Y/%m/%d"), 
+              infected_population(covid_prefecture),
+              covid_prefecture["severe"].to_s, 
+              covid_prefecture["deaths"].to_s, 
+              covid_prefecture["cases"].to_s
+            )
           end
-        end
+        end        
         client.reply_message(event['replyToken'], message)
       end
     }
@@ -78,7 +73,131 @@ class WebhookController < ApplicationController
 
   private
   def infected_population(covid_info)
-    return covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
+    infected = covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
+    return infected.to_s
+  end
+
+  def message_template(prefecture, date, infected, severe, deaths, cases)
+    message = {
+      type: "flex",
+      altText: prefecture + "のコロナ情報",
+      contents: {
+        type: "bubble",
+        body: {
+          type: "box",
+          layout: "vertical",
+          spacing: "md",
+          contents: [
+            {
+              type: "text",
+              text: prefecture,
+              margin: "none",
+              size: "xxl",
+              align: "center",
+              weight: "bold",
+              color: "#4FA74A"
+            },
+            {
+              type: "text",
+              text: date + " 更新" ,
+              margin: "none",
+              size: "sm",
+              align: "center",
+              color: "#AAAAAA"
+            },
+            {
+              type: "separator"
+            },
+            {
+              type: "box",
+              layout: "horizontal",
+              contents: [
+                {
+                  type: "text",
+                  text: "感染中",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#000000"
+                },
+                {
+                  type: "text",
+                  text: infected + "人",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#C82525"
+                },
+                {
+                  type: "text",
+                  text: "重症",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#000000"
+                },
+                {
+                  type: "text",
+                  text: severe + "人",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#C82525"
+                }
+              ]
+            },
+            {
+              type: "box",
+              layout: "baseline",
+              contents: [
+                {
+                  type: "text",
+                  text: "累計",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#000000"
+                },
+                {
+                  type: "text",
+                  text: cases + "人",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#C82525"
+                },
+                {
+                  type: "text",
+                  text: "死亡",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#000000"
+                },
+                {
+                  type: "text",
+                  text: deaths + "人",
+                  size: "sm",
+                  align: "center",
+                  gravity: "center",
+                  weight: "bold",
+                  color: "#C82525"
+                }
+              ]
+            },
+          ]
+        }
+      }
+    }
+    
+    return message
   end
 
 end
