@@ -122,7 +122,7 @@ class WebhookController < ApplicationController
                 },
                 {
                   type: "text",
-                  text: infected.to_s + "人",
+                  text: infected + "人",
                   size: "sm",
                   align: "center",
                   gravity: "center",
