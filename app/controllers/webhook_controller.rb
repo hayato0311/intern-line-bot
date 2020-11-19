@@ -12,6 +12,12 @@ class WebhookController < ApplicationController
     '岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'
   ]
 
+  LINK = {
+    '東京都':{
+      hotel: 'https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tokyo&f_shou=tokyo&f_sai=&f_dist=&f_cd=03&f_campaign=20allgoto2009dh-02&f_layout=list',
+      spot: 'https://travel.rakuten.co.jp/mytrip/ranking/spot-tokyo/',
+    },
+  }
   API_URL = 'https://covid19-japan-web-api.now.sh/api/v1/prefectures'
 
   def client
@@ -69,11 +75,6 @@ class WebhookController < ApplicationController
       end
     }
     head :ok
-  end
-
-  private
-  def infected_population(covid_info)
-    covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
   end
 
   def message_template(prefecture, date, infected, severe, deaths, cases)
@@ -191,10 +192,40 @@ class WebhookController < ApplicationController
                 }
               ]
             },
+            {
+              type: "separator"
+            },
+            {
+              type: "box",
+              layout: "horizontal",
+              contents: [
+                {
+                  type: "button",
+                  action: {
+                    type: "uri",
+                    label: "ホテル・旅館",
+                    uri: LINK[:'東京都'][:hotel]
+                  },
+                },
+                {
+                  type: "button",
+                  action: {
+                    type: "uri",
+                    label: "観光地",
+                    uri: LINK[:'東京都'][:spot]
+                  },
+                },
+              ]
+            },
           ]
         }
       }
     }
+  end
+
+  private
+  def infected_population(covid_info)
+    covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
   end
 
 end
