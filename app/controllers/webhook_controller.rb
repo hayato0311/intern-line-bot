@@ -49,8 +49,8 @@ class WebhookController < ApplicationController
             update_date = update_date.to_s
             update_date = Date.parse(update_date)
 
-            prefecture_data = prefectures_info.find {|data| data[:name] == '東京都'}
-            
+            prefecture_data = prefectures_info.find {|data| data[:name] == event.message['text']}
+
             message = message_template(
               event.message['text'], 
               update_date.strftime("%Y/%m/%d"), 
@@ -224,330 +224,330 @@ class WebhookController < ApplicationController
       {
         name: '北海道',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=hokkaido&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-hokkaido/",
         }
       },
       {
         name: '青森県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=aomori&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-aomori/",
         }
       },
       {
         name: '岩手県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=iwate&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-iwate/",
         }
       },
       {
         name: '宮城県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=miyagi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-miyagi/",
         }
       },
       {
         name: '秋田県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=akita&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-akita/",
         }
       },
       {
         name: '山形県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=yamagata&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-yamagata/",
         }
       },
       {
         name: '福島県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=hukushima&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-fukushima/",
         }
       },
       {
         name: '茨城県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=ibaragi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-ibaraki/",
         }
       },
       {
         name: '栃木県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tochigi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-tochigi/",
         }
       },
       {
         name: '群馬県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=gunma&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-gunma/",
         }
       },
       {
         name: '埼玉県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=saitama&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-saitama/",
         }
       },
       {
         name: '千葉県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tiba&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-chiba/",
         }
       },
       {
         name: '東京都',
         links: {
-          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tokyo&f_shou=tokyo&f_sai=&f_dist=&f_cd=03&f_campaign=20allgoto2009dh-02&f_layout=list",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tokyo&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
           spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-tokyo/",
         }
       },
       {
         name: '神奈川県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=kanagawa&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-kanagawa/",
         }
       },
       {
         name: '新潟県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=niigata&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-niigata/",
         }
       },
       {
         name: '富山県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=toyama&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-toyama/",
         }
       },
       {
         name: '石川県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=ishikawa&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-ishikawa/",
         }
       },
       {
         name: '福井県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=hukui&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-fukui/",
         }
       },
       {
         name: '山梨県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=yamanasi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-yamanashi/",
         }
       },
       {
         name: '長野県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=nagano&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-nagano/",
         }
       },
       {
         name: '岐阜県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=gihu&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-gifu/",
         }
       },
       {
         name: '静岡県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=shizuoka&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-shizuoka/",
         }
       },
       {
         name: '愛知県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=aichi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-aichi/",
         }
       },
       {
         name: '三重県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=mie&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-mie/",
         }
       },
       {
         name: '滋賀県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=shiga&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-shiga/",
         }
       },
       {
         name: '京都府',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=kyoto&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-kyoto/",
         }
       },
       {
         name: '大阪府',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=osaka&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-osaka/",
         }
       },
       {
         name: '兵庫県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=hyogo&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-hyogo/",
         }
       },
       {
         name: '奈良県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=nara&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-nara/",
         }
       },
       {
         name: '和歌山県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=wakayama&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-wakayama/",
         }
       },
       {
         name: '鳥取県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tottori&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-tottori/",
         }
       },
       {
         name: '島根県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=simane&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-shimane/",
         }
       },
       {
         name: '岡山県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=okayama&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-okayama/",
         }
       },
       {
         name: '広島県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=hiroshima&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-hiroshima/",
         }
       },
       {
         name: '山口県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=yamaguchi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-yamaguchi/",
         }
       },
       {
         name: '徳島県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tokushima&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-tokushima/",
         }
       },
       {
         name: '香川県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=kagawa&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-kagawa/",
         }
       },
       {
         name: '愛媛県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=ehime&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-ehime/",
         }
       },
       {
         name: '高知県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=kouchi&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-kochi/",
         }
       },
       {
         name: '福岡県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=hukuoka&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-fukuoka/",
         }
       },
       {
         name: '佐賀県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=saga&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-saga/",
         }
       },
       {
         name: '長崎県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=nagasaki&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-nagasaki/",
         }
       },
       {
         name: '熊本県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=nagasaki&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-kumamoto/",
         }
       },
       {
         name: '大分県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=ooita&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-oita/",
         }
       },
       {
         name: '宮崎県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=miyazaki&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-miyazaki/",
         }
       },
       {
         name: '鹿児島県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=kagoshima&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-kagoshima/",
         }
       },
       {
         name: '沖縄県',
         links: {
-          hotel: "",
-          spot: "",
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=okinawa&f_shou=&f_sai=&f_dist=&f_cd=02&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-okinawa/",
         }
       },
     ]
