@@ -49,7 +49,7 @@ class WebhookController < ApplicationController
             update_date = update_date.to_s
             update_date = Date.parse(update_date)
 
-            prefecture_data = prefectures_info.find {|data| data[:name] == event.message['text']}
+            prefecture_data = prefectures_info.find {|data| data[:name] == '東京都'}
             
             message = message_template(
               event.message['text'], 
