@@ -58,9 +58,9 @@ class WebhookController < ApplicationController
             message = message_template(
               event.message['text'], 
               update_date.strftime("%Y/%m/%d"), 
-              infected_population(covid_prefecture),
+              infected_population(covid_prefecture).to_s,
               covid_prefecture["severe"].to_s, 
-              covid_prefecture["deaths"].to_s, 
+              covid_prefecture["deaths"].to_s,
               covid_prefecture["cases"].to_s
             )
           end
@@ -73,12 +73,11 @@ class WebhookController < ApplicationController
 
   private
   def infected_population(covid_info)
-    infected = covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
-    return infected.to_s
+    covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
   end
 
   def message_template(prefecture, date, infected, severe, deaths, cases)
-    message = {
+    {
       type: "flex",
       altText: prefecture + "のコロナ情報",
       contents: {
@@ -123,7 +122,7 @@ class WebhookController < ApplicationController
                 },
                 {
                   type: "text",
-                  text: infected + "人",
+                  text: infected.to_s + "人",
                   size: "sm",
                   align: "center",
                   gravity: "center",
@@ -196,8 +195,6 @@ class WebhookController < ApplicationController
         }
       }
     }
-    
-    return message
   end
 
 end
