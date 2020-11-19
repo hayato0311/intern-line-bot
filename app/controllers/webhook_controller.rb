@@ -6,12 +6,6 @@ require "json"
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback] # CSRF対策無効化
 
-  PREFECTURES = [
-    '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県','新潟県','富山県',
-    '石川県','福井県','山梨県','長野県','岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県','鳥取県','島根県',
-    '岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'
-  ]
-
   API_URL = 'https://covid19-japan-web-api.now.sh/api/v1/prefectures'
 
   def client
@@ -54,6 +48,8 @@ class WebhookController < ApplicationController
             update_date = covid_prefecture["last_updated"]["cases_date"]
             update_date = update_date.to_s
             update_date = Date.parse(update_date)
+
+            prefecture_data = prefectures_info.find {|data| data[:name] == '東京都'}
             
             message = message_template(
               event.message['text'], 
@@ -61,7 +57,8 @@ class WebhookController < ApplicationController
               infected_population(covid_prefecture).to_s,
               covid_prefecture["severe"].to_s, 
               covid_prefecture["deaths"].to_s,
-              covid_prefecture["cases"].to_s
+              covid_prefecture["cases"].to_s,
+              prefecture_data[:links]
             )
           end
         end        
@@ -76,7 +73,7 @@ class WebhookController < ApplicationController
     covid_info["cases"] - covid_info["discharge"] - covid_info["deaths"]
   end
 
-  def message_template(prefecture, date, infected, severe, deaths, cases)
+  def message_template(prefecture, date, infected, severe, deaths, cases, links)
     {
       type: "flex",
       altText: prefecture + "のコロナ情報",
@@ -191,10 +188,369 @@ class WebhookController < ApplicationController
                 }
               ]
             },
+            {
+              type: "separator"
+            },
+            {
+              type: "box",
+              layout: "horizontal",
+              contents: [
+                {
+                  type: "button",
+                  action: {
+                    type: "uri",
+                    label: "ホテル・旅館",
+                    uri: links[:hotel]
+                  },
+                },
+                {
+                  type: "button",
+                  action: {
+                    type: "uri",
+                    label: "観光地",
+                    uri: links[:spot]
+                  },
+                },
+              ]
+            },
           ]
         }
       }
     }
+  end
+
+  def prefectures_info
+    [
+      {
+        name: '北海道',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '青森県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '岩手県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '宮城県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '秋田県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '山形県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '福島県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '茨城県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '栃木県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '群馬県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '埼玉県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '千葉県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '東京都',
+        links: {
+          hotel: "https://search.travel.rakuten.co.jp/ds/undated/search?f_dai=japan&f_landmark_id=&f_ido=0&f_kdo=0&f_latitude=0&f_longitude=0&f_teikei=&f_disp_type=&f_sort=hotel&f_rm_equip=&f_page=1&f_hyoji=30&f_image=1&f_tab=hotel&f_setubi=&f_point_min=0&f_datumType=&f_cok=&f_chu=tokyo&f_shou=tokyo&f_sai=&f_dist=&f_cd=03&f_campaign=20allgoto2009dh-02&f_layout=list",
+          spot: "https://travel.rakuten.co.jp/mytrip/ranking/spot-tokyo/",
+        }
+      },
+      {
+        name: '神奈川県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '新潟県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '富山県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '石川県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '福井県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '山梨県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '長野県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '岐阜県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '静岡県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '愛知県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '三重県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '滋賀県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '京都府',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '大阪府',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '兵庫県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '奈良県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '和歌山県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '鳥取県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '島根県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '岡山県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '広島県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '山口県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '徳島県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '香川県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '愛媛県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '高知県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '福岡県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '佐賀県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '長崎県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '熊本県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '大分県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '宮崎県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '鹿児島県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+      {
+        name: '沖縄県',
+        links: {
+          hotel: "",
+          spot: "",
+        }
+      },
+    ]
   end
 
 end
